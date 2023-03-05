@@ -1,4 +1,4 @@
-FROM python:3.10.9-bullseye
+FROM python:3.8.16-bullseye
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
