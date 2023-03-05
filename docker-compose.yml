@@ -1,0 +1,39 @@
+version: "3.8"
+services:
+  # Postgres
+  postgres:
+    restart: always
+    image: postgres:13
+    container_name: weather-postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data/
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: cepstr123
+    ports:
+      - "5431:5432"
+    networks:
+      - my-net
+  # Django Server
+  django:
+    restart: always
+    container_name: weather-server
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+    networks:
+      - my-net
+
+
+networks:
+  my-net:
+    driver: bridge
+volumes:
+  postgres-data: { }
